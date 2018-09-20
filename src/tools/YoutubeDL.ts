@@ -1,22 +1,27 @@
 import { spawn } from 'child_process';
 
-export async function downloadYoutubeAsMp3() {
+export function downloadYoutubeAsMp3(url: string, cwd: string): Promise<void> {
+    console.log(`Downloading "${url}" to "${cwd}".`);
+    return new Promise((resolve, reject) => {
+        const command = spawn(
+            'youtube-dl',
+            [url, '--extract-audio', '--audio-format', 'mp3'],
+            { cwd },
+        );
 
-    const command = spawn('youtube-dl', ['https://www.youtube.com/watch?v=jJBmH6siEk4','--extract-audio','--audio-format','mp3'],{cwd:'/home/hejny/Downloads/youtube'});
-    
-    command.stdout.on('data', (data) => {
-      console.log(`stdout: ${data}`);
-    });
-    
-    command.stderr.on('data', (data) => {
-      console.log(`stderr: ${data}`);
-    });
-    
-    command.on('close', (code) => {
-      console.log(`child process exited with code ${code}`);
-    });
-    
+        command.stdout.on('data', (data) => {
+            console.log(`stdout: ${data}`);
+        });
 
+        command.stderr.on('data', (data) => {
+            reject(new Error(`stderr: ${data}`));
+        });
+
+        command.on('close', (code) => {
+            console.log(`child process exited with code ${code}`);
+            resolve();
+        });
+    });
 }
 
 /*
