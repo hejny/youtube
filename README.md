@@ -8,5 +8,6 @@ Download youtube videos as mp3 files.
 
 #### Fedora DNF: 
 ```bash
- sudo dnf install youtube-dl
+sudo dnf install youtube-dl
+sudo dnf install ffmpeg
 ```

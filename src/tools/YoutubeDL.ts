@@ -1,4 +1,23 @@
-export async function downloadYoutubeAsMp3() {}
+import { spawn } from 'child_process';
+
+export async function downloadYoutubeAsMp3() {
+
+    const command = spawn('youtube-dl', ['https://www.youtube.com/watch?v=jJBmH6siEk4','--extract-audio','--audio-format','mp3'],{cwd:'/home/hejny/Downloads/youtube'});
+    
+    command.stdout.on('data', (data) => {
+      console.log(`stdout: ${data}`);
+    });
+    
+    command.stderr.on('data', (data) => {
+      console.log(`stderr: ${data}`);
+    });
+    
+    command.on('close', (code) => {
+      console.log(`child process exited with code ${code}`);
+    });
+    
+
+}
 
 /*
 Options:

@@ -1,5 +1,9 @@
+import { downloadYoutubeAsMp3 } from "./tools/YoutubeDL";
+
 async function main() {
-    console.log('ahoj');
+    console.log('App running...');
+
+    downloadYoutubeAsMp3();
 }
 
 main();
